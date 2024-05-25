@@ -1,0 +1,66 @@
+ProductController
+all api creating in controller
+Get Products-Done
+Add a product-Done
+Get one product-Done
+Filter Product-Done
+Rate product
+Add items to Cart
+Get items of Cart
+Remove items from cart.
+UserController
+signup-email,name,password,type of user-(customer or seller)-Done
+signin-(email,password)-Done
+
+
+
+Folder structure
+route configuration
+creating APIs
+Different API Methods
+Middlewares
+Route parameter 
+query parameter
+Testing api using postman
+Securing api using jwt token
+Documentating api using swagger
+CORS
+logging
+Error Handling
+
+
+counter collection (_id:"cartItemId", value:0)
+while adding cartItems,increment the counter and then use counter value as id to cartItem document.
+
+
+db.products.aggregate([
+    //1. Create documents for ratings
+    {
+        $unwind: "$ratings"
+    },
+    //2.Group rating per product and get average rating
+    {
+        $group:{
+            _id:"$name",
+            averageRating:{$avg:"$ratings.rating"}
+        }
+    }
+])
+
+db.products.aggregate([
+    // Stage project name and count of averageRating
+    $project:{name:1, countOfRating:{
+        $cond:{if:{$isArray:"$ratings"}
+        ,then:{$size:"$ratings"}
+        ,else:0}
+    }
+    },
+    {
+        // Sort the collection
+        $sort:{countOfRating:-1}
+    },
+    {
+        // limit to just one item in result
+        $limit:1
+    }
+])

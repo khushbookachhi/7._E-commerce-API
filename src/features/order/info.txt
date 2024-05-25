@@ -1,0 +1,11 @@
+place order
+get cart items of user and calculate totatAmount which we need to charge
+create a record for order
+Reduce the stock (products Quantity)
+Clear the cart
+**************Transaction:- if one operation fails all operation should not perform (revert back)
+
+Deduct the payment
+Inform to sellers
+Inform to courier
+8000  2000=====10000
